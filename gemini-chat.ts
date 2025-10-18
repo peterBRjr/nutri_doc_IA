@@ -5,7 +5,7 @@ interface Ingrediente {
   nome: string;
   beneficios: string;
 }
-interface NutriSnapAnalysis {
+interface NutriDoctorAnalysis {
   criticaGourmet: string;
   ingredientes: Ingrediente[];
 }
@@ -44,7 +44,7 @@ Instruções para o JSON:
 3. "nome": O nome do ingrediente (ex: "Salmão Grelhado", "Brócolis", "Arroz Branco").
 4. "beneficios": Um resumo simples (1-2 frases) dos principais benefícios nutricionais desse ingrediente para a saúde.
 `;
-async function generateMealAnalysis(base64Image: string): Promise<NutriSnapAnalysis> {
+async function generateMealAnalysis(base64Image: string): Promise<NutriDoctorAnalysis> {
   if (!base64Image) {
     throw new Error('Nenhuma imagem (base64) fornecida.');
   }
@@ -83,7 +83,7 @@ async function generateMealAnalysis(base64Image: string): Promise<NutriSnapAnaly
 
     const rawJson = contentResponse.candidates[0].content.parts[0].text;
 
-    const jsonData: NutriSnapAnalysis = JSON.parse(rawJson);
+    const jsonData: NutriDoctorAnalysis = JSON.parse(rawJson);
 
     if (!jsonData.criticaGourmet || !jsonData.ingredientes) {
         throw new Error('JSON retornado pela IA não segue o formato esperado.');
@@ -97,4 +97,4 @@ async function generateMealAnalysis(base64Image: string): Promise<NutriSnapAnaly
   }
 }
 
-export { generateMealAnalysis, NutriSnapAnalysis, Ingrediente };
+export { generateMealAnalysis, NutriDoctorAnalysis, Ingrediente };
