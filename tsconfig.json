@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Gera JavaScript moderno
+    "module": "CommonJS", // Padrão do Node.js
+    "outDir": "./dist", // Onde o JS compilado (para produção) vai ficar
+    "rootDir": "./", // Onde seus arquivos .ts estão
+    "strict": true, // Liga todas as verificações de tipo (MUITO recomendado)
+    "esModuleInterop": true, // Permite 'import' de módulos 'require'
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "*.ts"      
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
