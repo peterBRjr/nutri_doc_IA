@@ -6,6 +6,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Nutridoctor</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisamos de acesso à câmera para que você possa fotografar sua refeição para análise.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
