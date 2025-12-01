@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:nutridoctor/pages/cadastro/cadastro_usuario.dart';
 import 'package:nutridoctor/uteis/appColors.dart';
 
-class CadastroUsuario extends StatefulWidget {
-  const CadastroUsuario({Key? key}) : super(key: key);
+class LoginUsuario extends StatefulWidget {
+  const LoginUsuario({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _CadastroUsuarioState();
-  }
+  State<LoginUsuario> createState() => _LoginUsuarioState();
 }
 
-class _CadastroUsuarioState extends State<CadastroUsuario> {
+class _LoginUsuarioState extends State<LoginUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Criar Conta",
+          "Acesso",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primary,
@@ -28,57 +27,59 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
             bottom: Radius.circular(20),
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             Icon(
-              Icons.person_add_alt_1,
-              size: 80,
+              Icons.account_circle,
+              size: 100,
               color: AppColors.primary,
             ),
             const SizedBox(height: 10),
             Text(
-              "Junte-se ao NutriDoctor",
+              "NutriDoctor",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
             ),
-            const SizedBox(height: 30),
-            _buildTextField(
-              label: "Nome Completo",
-              icon: Icons.person_outline,
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 40),
             _buildTextField(
               label: "Data de Nascimento",
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.calendar_today,
               keyboardType: TextInputType.datetime,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             _buildTextField(
               label: "Senha",
-              icon: Icons.lock_outline,
+              icon: Icons.lock,
               isPassword: true,
             ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              label: "Confirmar Senha",
-              icon: Icons.lock_reset,
-              isPassword: true,
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Esqueceu a senha?",
+                  style: TextStyle(
+                      color: AppColors.primary, fontWeight: FontWeight.w600),
+                ),
+              ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             SizedBox(
               height: 55,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Ação de Login
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -88,10 +89,33 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                   ),
                 ),
                 child: const Text(
-                  "CADASTRAR",
+                  "ENTRAR",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Não tem uma conta?"),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CadastroUsuario()));
+                  },
+                  child: Text(
+                    "Cadastre-se aqui",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

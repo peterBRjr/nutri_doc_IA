@@ -1,7 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:nutridoctor/pages/cadastro/cadastro_usuario.dart';
 import 'package:nutridoctor/pages/camera/camera_screen.dart';
+import 'package:nutridoctor/pages/login/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const CadastroUsuario(),
+      home: const LoginUsuario(),
     );
   }
 }
