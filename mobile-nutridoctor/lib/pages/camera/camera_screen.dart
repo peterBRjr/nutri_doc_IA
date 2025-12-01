@@ -1,9 +1,10 @@
-// lib/camera_screen.dart
-import 'dart:io'; // Para usar o tipo 'File'
-import 'dart:convert'; // Para formatar o JSON no Alert
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nutridoctor/API/api_service.dart';
+import 'package:nutridoctor/classes/class.dart';
+import 'package:nutridoctor/pages/retorno/retorno.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -58,20 +59,11 @@ class _CameraScreenState extends State<CameraScreen> {
   void _mostrarResultado(Map<String, dynamic> resultado) {
     const jsonEncoder = JsonEncoder.withIndent('  ');
     final String jsonBonito = jsonEncoder.convert(resultado);
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Análise da Refeição'),
-        content: SingleChildScrollView(
-          child: Text(jsonBonito),
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AnalysisResultScreen(
+          analysisResult: nutriDoctorAnalysisFromJson(jsonBonito),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
       ),
     );
   }

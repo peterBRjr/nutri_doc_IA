@@ -2,11 +2,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class ApiService {
-  static const String _apiUrl = 'http://10.0.2.2:3000/api/analise';
+  static const String _apiUrl = 'http://192.168.137.1:3000/api/analise';
 
   static Future<Map<String, dynamic>> analisarRefeicao(File imagem) async {
     final dio = Dio();
-
     String fileName = imagem.path.split('/').last;
     FormData formData = FormData.fromMap({
       'imagem': await MultipartFile.fromFile(

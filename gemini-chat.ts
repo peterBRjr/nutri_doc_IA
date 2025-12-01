@@ -14,7 +14,7 @@ const PROJECT_ID = process.env.GOOGLE_PROJECT_ID || 'YOUR_PROJECT_ID';
 const LOCATION = process.env.GOOGLE_LOCATION || 'YOUR_LOCATION';
 
 const vertex_ai = new VertexAI({ project: PROJECT_ID, location: LOCATION });
-const model = 'gemini-1.0-pro-vision-001';
+const model = "gemini-2.0-flash";
 
 const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
@@ -65,9 +65,8 @@ async function generateMealAnalysis(base64Image: string): Promise<NutriDoctorAna
     contents: [{ role: 'user', parts: [imagePart, textPart] }],
   };
 
-  try {
+try {
     const response = await generativeModel.generateContent(request);
-
     const contentResponse = response.response;
     
     if (!contentResponse || 
@@ -81,9 +80,17 @@ async function generateMealAnalysis(base64Image: string): Promise<NutriDoctorAna
       throw new Error('Resposta da IA inválida ou vazia.');
     }
 
-    const rawJson = contentResponse.candidates[0].content.parts[0].text;
+    const rawResponseText = contentResponse.candidates[0].content.parts[0].text;
 
-    const jsonData: NutriDoctorAnalysis = JSON.parse(rawJson);
+    const jsonMatch = rawResponseText.match(/\{[\s\S]*\}/);
+
+    if (!jsonMatch || jsonMatch.length === 0) {
+        console.error("Nenhum JSON válido encontrado na resposta da IA:", rawResponseText);
+        throw new Error('Resposta da IA não continha um JSON válido.');
+    }
+
+    const cleanedJsonString = jsonMatch[0];
+    const jsonData: NutriDoctorAnalysis = JSON.parse(cleanedJsonString);
 
     if (!jsonData.criticaGourmet || !jsonData.ingredientes) {
         throw new Error('JSON retornado pela IA não segue o formato esperado.');

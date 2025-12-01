@@ -1,5 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:nutridoctor/pages/cadastro/cadastro_usuario.dart';
 import 'package:nutridoctor/pages/camera/camera_screen.dart';
 
 void main() {
@@ -12,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Nutri Doctor IA',
       theme: ThemeData(
-        primarySwatch: Colors.green, // Um tema mais "nutri"
+        primarySwatch: Colors.green,
       ),
-      home: const CameraScreen(), // Mude aqui!
+      home: const CadastroUsuario(),
     );
   }
 }
