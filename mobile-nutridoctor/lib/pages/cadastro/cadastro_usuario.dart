@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutridoctor/uteis/appColors.dart';
+import 'package:nutridoctor/uteis/cpfFIeld.dart';
+import 'package:nutridoctor/uteis/datanascimentoField.dart';
 
 class CadastroUsuario extends StatefulWidget {
   const CadastroUsuario({Key? key}) : super(key: key);
@@ -11,6 +13,21 @@ class CadastroUsuario extends StatefulWidget {
 }
 
 class _CadastroUsuarioState extends State<CadastroUsuario> {
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _confirmSenhaController = TextEditingController();
+
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _senhaController.dispose();
+    _confirmSenhaController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,24 +72,41 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
             _buildTextField(
               label: "Nome Completo",
               icon: Icons.person_outline,
+              controller: _nomeController,
             ),
             const SizedBox(height: 16),
-            _buildTextField(
-              label: "Data de Nascimento",
-              icon: Icons.calendar_today_outlined,
-              keyboardType: TextInputType.datetime,
-            ),
+            CpfField(),
+            const SizedBox(height: 16),
+            DataNascimentoField(),
             const SizedBox(height: 16),
             _buildTextField(
               label: "Senha",
-              icon: Icons.lock_outline,
+              icon: _isPasswordVisible
+                  ? Icons.lock_open_outlined
+                  : Icons.lock_outline,
               isPassword: true,
+              obscureText: !_isPasswordVisible,
+              controller: _senhaController,
+              onIconPressed: () {
+                setState(() {
+                  _isPasswordVisible = !_isPasswordVisible;
+                });
+              },
             ),
             const SizedBox(height: 16),
             _buildTextField(
               label: "Confirmar Senha",
-              icon: Icons.lock_reset,
+              icon: _isConfirmPasswordVisible
+                  ? Icons.lock_open_outlined
+                  : Icons.lock_reset,
               isPassword: true,
+              obscureText: !_isConfirmPasswordVisible,
+              controller: _confirmSenhaController,
+              onIconPressed: () {
+                setState(() {
+                  _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                });
+              },
             ),
             const SizedBox(height: 40),
             SizedBox(
@@ -102,18 +136,27 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
   Widget _buildTextField({
     required String label,
     required IconData icon,
+    required TextEditingController controller,
     bool isPassword = false,
     TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+    VoidCallback? onIconPressed,
   }) {
     return TextField(
-      obscureText: isPassword,
+      controller: controller,
+      obscureText: isPassword ? obscureText : false,
       keyboardType: keyboardType,
       cursorColor: AppColors.primary,
       style: const TextStyle(color: Colors.black87),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: AppColors.primary),
-        prefixIcon: Icon(icon, color: AppColors.primary),
+        prefixIcon: onIconPressed != null
+            ? IconButton(
+                icon: Icon(icon, color: AppColors.primary),
+                onPressed: onIconPressed,
+              )
+            : Icon(icon, color: AppColors.primary),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(color: AppColors.primary.withOpacity(0.3)),

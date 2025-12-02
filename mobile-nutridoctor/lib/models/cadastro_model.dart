@@ -1,0 +1,1 @@
+class cadastro_model {}
